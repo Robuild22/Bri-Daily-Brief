@@ -1,0 +1,237 @@
+/* ============================================================
+   BRI — stylesheet
+   Change the colours in :root below to restyle the whole page.
+   ============================================================ */
+:root {
+  --bg:     #050510;
+  --cyan:   #00d4ff;
+  --purple: #a855f7;
+  --text:   #e0e8ff;
+  --muted:  #6b7db3;
+  --panel:  rgba(255,255,255,0.03);
+  --line:   rgba(0,212,255,0.15);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.container { max-width: 820px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+
+/* ---------- Header ---------- */
+.header { text-align: center; margin-bottom: 1.75rem; }
+
+.logo {
+  font-family: 'Orbitron', monospace;
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.12em;
+}
+
+.tagline {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+  opacity: 0.75;
+}
+
+.date { font-size: 0.9rem; color: var(--muted); margin-top: 0.75rem; letter-spacing: 0.05em; }
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent);
+  margin: 1.75rem 0;
+  opacity: 0.35;
+}
+
+/* ============================================================
+   HERO SCENE — rotating Earth, satellites, orbiting clocks
+   ------------------------------------------------------------
+   TO SWAP IN YOUR AVATAR VIDEO LATER:
+   In template.html, delete the whole <div class="hero">...</div>
+   block and paste this in its place:
+
+     <video autoplay loop muted playsinline
+            style="width:100%;border-radius:18px;margin-bottom:2rem;">
+       <source src="your-avatar.mp4" type="video/mp4">
+     </video>
+
+   Then you can delete everything between the ==== markers here.
+   ============================================================ */
+.hero { position: relative; margin-bottom: 2rem; }
+
+.stage {
+  position: relative;
+  height: 560px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: radial-gradient(ellipse at 50% 45%, #0b1030 0%, #04040e 70%);
+}
+
+/* starfield */
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.4px 1.4px at 7% 12%,  rgba(255,255,255,0.75) 0%, transparent 100%),
+    radial-gradient(1px 1px   at 17% 55%,  rgba(255,255,255,0.5)  0%, transparent 100%),
+    radial-gradient(1.4px 1.4px at 29% 21%, rgba(255,255,255,0.6)  0%, transparent 100%),
+    radial-gradient(1px 1px   at 41% 78%,  rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px   at 57% 9%,   rgba(255,255,255,0.6)  0%, transparent 100%),
+    radial-gradient(1.4px 1.4px at 69% 44%, rgba(255,255,255,0.5)  0%, transparent 100%),
+    radial-gradient(1px 1px   at 79% 83%,  rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1.4px 1.4px at 89% 26%, rgba(255,255,255,0.7)  0%, transparent 100%),
+    radial-gradient(1px 1px   at 95% 62%,  rgba(255,255,255,0.5)  0%, transparent 100%),
+    radial-gradient(1px 1px   at 4% 88%,   rgba(255,255,255,0.45) 0%, transparent 100%);
+  animation: twinkle 7s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle { from { opacity: 0.55; } to { opacity: 1; } }
+
+#globe { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.mic {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.6rem;
+  z-index: 6;
+  pointer-events: none;
+  animation: micGlow 2.6s ease-in-out infinite;
+}
+
+@keyframes micGlow {
+  0%, 100% { filter: drop-shadow(0 0 14px rgba(0,212,255,0.9)) drop-shadow(0 0 5px rgba(168,85,247,0.7)); }
+  50%      { filter: drop-shadow(0 0 26px rgba(0,212,255,1))   drop-shadow(0 0 13px rgba(168,85,247,0.95)); }
+}
+
+/* orbiting clock ring */
+.clock-layer { position: absolute; inset: 0; z-index: 7; pointer-events: none; }
+
+.clock-node { position: absolute; left: 0; top: 0; will-change: transform; }
+
+.clock-card {
+  min-width: 98px;
+  padding: 0.4rem 0.7rem;
+  text-align: center;
+  border-radius: 10px;
+  background: rgba(6,10,28,0.72);
+  border: 1px solid rgba(0,212,255,0.28);
+  box-shadow: 0 0 18px rgba(0,140,255,0.18);
+  backdrop-filter: blur(4px);
+}
+
+.clock-time {
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text);
+  letter-spacing: 0.03em;
+}
+
+.clock-city {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-top: 0.2rem;
+}
+
+/* On small screens the orbit is dropped and the clocks become a grid */
+@media (max-width: 720px) {
+  .stage { height: 330px; }
+  .mic { font-size: 2rem; }
+  .clock-layer {
+    position: static !important;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+  .clock-node { position: static !important; transform: none !important; }
+}
+/* ============================================================
+   END HERO SCENE
+   ============================================================ */
+
+/* ---------- Player ---------- */
+.player-section {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+audio { width: 100%; margin-bottom: 1.2rem; border-radius: 8px; accent-color: var(--cyan); }
+
+.speed-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.speed-controls { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.speed-btn {
+  padding: 0.35rem 0.65rem;
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.speed-btn:hover { border-color: rgba(0,212,255,0.5); color: var(--cyan); }
+
+.speed-btn.active {
+  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(168,85,247,0.15));
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* ---------- Transcript ---------- */
+.transcript-section { border-top: 1px solid rgba(0,212,255,0.1); padding-top: 2rem; }
+
+.transcript-heading {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+}
+
+.transcript {
+  white-space: pre-wrap;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #c0ccee;
+  font-weight: 300;
+}
