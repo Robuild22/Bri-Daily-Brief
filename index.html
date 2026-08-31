@@ -4,147 +4,298 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bri — Daily AI Brief</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: Georgia, serif;
-      max-width: 760px;
+      font-family: 'Inter', sans-serif;
+      background: #050510;
+      color: #e0e8ff;
+      min-height: 100vh;
+      background-image:
+        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .container {
+      max-width: 780px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
-      background: #fafaf8;
-      color: #1a1a1a;
-      line-height: 1.7;
+      padding: 3rem 1.5rem 4rem;
     }
-    h1 { font-size: 2rem; margin-bottom: 0.25rem; }
-    .date { color: #666; margin-bottom: 2rem; font-style: italic; }
-    .player-section {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
+
+    .header { text-align: center; margin-bottom: 2.5rem; }
+
+    .logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 3.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #00d4ff, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.12em;
     }
-    audio { width: 100%; margin-bottom: 1rem; }
-    .speed-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
-    .speed-controls span { font-size: 0.9rem; color: #555; margin-right: 0.25rem; }
-    .speed-btn {
-      padding: 0.3rem 0.7rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background: #f5f5f5;
-      cursor: pointer;
-      font-size: 0.85rem;
+
+    .tagline {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: #00d4ff;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+      opacity: 0.75;
     }
-    .speed-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+
+    .date {
+      font-size: 0.9rem;
+      color: #6b7db3;
+      margin-top: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #00d4ff, #a855f7, transparent);
+      margin: 2rem 0;
+      opacity: 0.35;
+    }
 
     /* --------------------------------------------------------
        AVATAR VIDEO PLACEHOLDER
-       When you have a talking-avatar video ready, replace the
-       <div> below with a <video> or <iframe> tag pointing to
-       your video file or embed URL. Remove this entire comment
-       and the placeholder div, and drop your video element in.
+       When your talking-avatar video is ready, delete the
+       .avatar-placeholder div below and replace it with:
+
+         <video autoplay loop muted playsinline
+                style="width:100%; border-radius:16px;">
+           <source src="your-avatar.mp4" type="video/mp4" />
+         </video>
+
+       For a hosted embed, use an <iframe> instead.
+       Remove this comment block too.
     -------------------------------------------------------- */
     .avatar-placeholder {
-      background: #e8e8e8;
-      border: 2px dashed #bbb;
-      border-radius: 12px;
-      height: 280px;
+      position: relative;
+      height: 300px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #0d0d2b, #0a1628);
+      border: 1px solid rgba(0, 212, 255, 0.2);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #888;
+      overflow: hidden;
       margin-bottom: 2rem;
-      font-size: 1rem;
     }
-    .avatar-placeholder .icon { font-size: 3rem; margin-bottom: 0.5rem; }
 
-    .transcript-section h2 { font-size: 1.3rem; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem; }
-    .transcript { white-space: pre-wrap; font-size: 1rem; }
+    .avatar-placeholder::before {
+      content: '';
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168,85,247,0.15), rgba(0,212,255,0.05), transparent 70%);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+
+    .avatar-ring {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 212, 255, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 1.2rem;
+    }
+
+    .avatar-ring::after {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      border: 1px solid rgba(168, 85, 247, 0.2);
+    }
+
+    .avatar-icon { font-size: 3rem; }
+
+    .avatar-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: #6b7db3;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .player-section {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    audio {
+      width: 100%;
+      margin-bottom: 1.2rem;
+      border-radius: 8px;
+      accent-color: #00d4ff;
+    }
+
+    .speed-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: #6b7db3;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .speed-controls { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+    .speed-btn {
+      padding: 0.35rem 0.65rem;
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 6px;
+      background: transparent;
+      color: #6b7db3;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .speed-btn:hover { border-color: rgba(0,212,255,0.5); color: #00d4ff; }
+
+    .speed-btn.active {
+      background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(168,85,247,0.15));
+      border-color: #00d4ff;
+      color: #00d4ff;
+    }
+
+    .transcript-section {
+      border-top: 1px solid rgba(0, 212, 255, 0.1);
+      padding-top: 2rem;
+    }
+
+    .transcript-heading {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: #00d4ff;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0.7;
+    }
+
+    .transcript {
+      white-space: pre-wrap;
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #c0ccee;
+      font-weight: 300;
+    }
   </style>
 </head>
 <body>
+  <div class="container">
 
-  <h1>Bri — Daily AI Brief</h1>
-  <p class="date">August 31, 2026</p>
-
-  <!-- AVATAR VIDEO PLACEHOLDER — replace this block with your video when ready -->
-  <div class="avatar-placeholder">
-    <div class="icon">🎙️</div>
-    <div>Talking avatar video will appear here</div>
-    <div style="font-size:0.8rem; margin-top:0.4rem;">Replace this div in build_page.py</div>
-  </div>
-
-  <div class="player-section">
-    <audio id="player" controls preload="metadata">
-      <source src="audio/brief.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-    <div class="speed-controls">
-      <span>Speed:</span>
-      <button class="speed-btn" onclick="setSpeed(0.75)">0.75x</button>
-      <button class="speed-btn active" onclick="setSpeed(1)">1x</button>
-      <button class="speed-btn" onclick="setSpeed(1.25)">1.25x</button>
-      <button class="speed-btn" onclick="setSpeed(1.5)">1.5x</button>
-      <button class="speed-btn" onclick="setSpeed(1.75)">1.75x</button>
-      <button class="speed-btn" onclick="setSpeed(2)">2x</button>
-      <button class="speed-btn" onclick="setSpeed(3)">3x</button>
-      <button class="speed-btn" onclick="setSpeed(5)">5x</button>
+    <div class="header">
+      <div class="logo">BRI</div>
+      <div class="tagline">Daily AI Intelligence Brief</div>
+      <div class="date">August 31, 2026</div>
     </div>
-  </div>
 
-  <div class="transcript-section">
-    <h2>Full Transcript</h2>
-    <div class="transcript"># AI MORNING BRIEFING – BRI'S SCRIPT
+    <div class="divider"></div>
 
-Good morning, everyone. I'm Bri, and welcome to your AI news briefing. It's great to have you here with your coffee. We've got a lot of ground to cover today, so let's dive right in.
+    <!-- AVATAR PLACEHOLDER — replace this div with your video element when ready -->
+    <div class="avatar-placeholder">
+      <div class="avatar-ring">
+        <div class="avatar-icon">🎙️</div>
+      </div>
+      <div class="avatar-label">Avatar coming soon</div>
+    </div>
 
-Our top story this morning is something that's been causing quite a bit of confusion in the AI community, and honestly, I think a lot of people are going to want clarity on this. OpenAI has been making some significant changes to ChatGPT Work since they announced it back in July, and it turns out the company has actually created two separate products under the same name. I know, confusing right? Let me break this down for you.
+    <div class="player-section">
+      <audio id="player" controls preload="metadata">
+        <source src="audio/brief.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      <div class="speed-label">Playback Speed</div>
+      <div class="speed-controls">
+        <button class="speed-btn" onclick="setSpeed(0.75, this)">0.75×</button>
+        <button class="speed-btn active" onclick="setSpeed(1, this)">1×</button>
+        <button class="speed-btn" onclick="setSpeed(1.25, this)">1.25×</button>
+        <button class="speed-btn" onclick="setSpeed(1.5, this)">1.5×</button>
+        <button class="speed-btn" onclick="setSpeed(1.75, this)">1.75×</button>
+        <button class="speed-btn" onclick="setSpeed(2, this)">2×</button>
+        <button class="speed-btn" onclick="setSpeed(2.5, this)">2.5×</button>
+        <button class="speed-btn" onclick="setSpeed(3, this)">3×</button>
+        <button class="speed-btn" onclick="setSpeed(4, this)">4×</button>
+        <button class="speed-btn" onclick="setSpeed(5, this)">5×</button>
+      </div>
+    </div>
 
-The first version, which we can think of as Work Cloud, is what you access through ChatGPT dot com or through the mobile apps. This is the cloud-based experience you've probably heard about. But here's where it gets interesting. If you install the ChatGPT desktop application—which used to be called Codex—you get access to a different beast entirely. This version can directly access files on your computer and run programs locally. So you're basically getting two very different experiences depending on which path you take. According to analysis from Simon Willison's weblog, this is an extraordinarily powerful product, but the dual nature of it has definitely created some real confusion in the developer and business community. We're still learning what all the capabilities and limitations are, but if you're thinking about using ChatGPT Work for your organization, you'll definitely want to understand which version you're actually getting.
+    <div class="transcript-section">
+      <div class="transcript-heading">Full Transcript</div>
+      <div class="transcript"># MORNING BRIEFING WITH BRI
+## AI News in 10 Minutes
 
-All right, let's shift gears a bit and talk about what's happening in terms of new AI models and research breakthroughs, because there's been some fascinating technical work happening.
+Good morning, and welcome back to the AI briefing. I'm Bri, and I'm so glad you're here with me. You know, mornings are when I love diving into what happened in the AI world overnight, and today we have some really fascinating developments to walk through together. So grab your coffee, get comfortable, and let's talk about what's happening in artificial intelligence right now.
 
-First up, there's Continuous Diffusion Language Models, or CDLMs for short. This is some emerging research that's generating a lot of discussion in the technical community. The implications here could be pretty significant for how we think about generating and processing language going forward. It's one of those pieces of research that doesn't make headlines in the mainstream media, but in the AI world, people are paying close attention.
+Let me start with the single most important story on everyone's radar this morning, and that's OpenAI's ambitious rollout of ChatGPT Work. This is a big one because it represents a fundamental shift in how the company is positioning AI for professional use. Now, I know you might have heard the name floating around, and honestly, OpenAI has been iterating on this so rapidly that it's genuinely confusing. But here's what's actually going on underneath all the noise.
 
-We're also seeing some really interesting applications coming out. There's a new tool called Academa that's generating long-form STEM lecture videos using large language models. Think about that for a second. We're moving into territory where AI can now create educational content at scale. That's going to have huge implications for how people learn, especially in technical fields. It's still very early, but it's the kind of innovation that shows where we're heading.
+ChatGPT Work is actually two separate products, and that's the key to understanding why people are so intrigued right now. The more powerful version runs in the cloud and you can access it through ChatGPT dot com or through their mobile apps. We're calling this Work Cloud, and it's legitimately powerful for ambitious professional work. But then there's also a desktop version, which used to be called Codex, and this local version can directly access files on your computer and run programs in real time. That's a completely different capability. The cloud version is about leverage and collaboration, while the desktop version is about deep integration with your actual work environment. So when you hear people talking about ChatGPT Work, just know they might be talking about two very different experiences depending on which one they're using.
 
-On a related note, there's been work on automating immersive reading experiences as well. These tools are making educational content more accessible and more personalized. We're seeing AI move from being a tool that answers questions to being a tool that can actually shape how we consume and learn information.
+Now, this matters because it signals that OpenAI sees the market fragmenting. They're not betting on one approach anymore. They're doubling down on flexibility, which tells you something important about where they think professional AI is heading. This isn't just a chat interface anymore. This is infrastructure for how people actually work.
 
-Now let's talk about the business and funding side of things, because that's where the real action is in terms of where the industry is heading.
+Speaking of new capabilities and research breakthroughs, we've got some fascinating technical developments that are worth understanding. One story that caught the attention of the research community is about Continuous Diffusion Language Models, or CDLMs. Without getting too deep into the weeds, what's happening here is that researchers are exploring new architectures that work fundamentally differently from the transformer models that power ChatGPT and most of what we use today. Why should you care? Because architectural diversity in AI research is how we make real progress. We learn more from exploring different approaches than we do from optimizing the same approach forever.
 
-Caterpillar is bringing its decades of experience with autonomous machines to the broader AI deployment world. If you know anything about Caterpillar, you know they've spent a really long time putting autonomous equipment to work in remote mining operations. Now they're taking everything they've learned from that world and applying it to help other companies deploy AI safely and effectively. That's the kind of enterprise-level thinking that's going to be crucial as AI moves from startups into the operations of massive industrial organizations.
+We're also seeing the release of Haiku R1 beta six, which continues the push toward AI models that are faster and more efficient. There's a real competitive push right now to make AI work better on less hardware, and that matters for everything from running models locally to deploying them globally at scale.
 
-We're also seeing Meta get into the robotics game in their data centers. They're testing robots for tasks that technicians currently perform. This is a big deal because if it works, we're looking at a whole new category of application for both AI and robotics in what many people consider the backbone of the internet.
+Now let's shift gears and talk about what's happening in the world of business and real-world AI deployment, because this is where things get really interesting. Caterpillar, yes, the heavy equipment company, announced that they're bringing what they learned from decades of autonomous mining operations to AI deployment more broadly. That's not just corporate innovation speak. That actually means something significant. Caterpillar has real-world experience managing autonomous systems in remote, harsh environments where failures are expensive and downtime is costly. They've had to solve hard problems around reliability, maintenance, and human-AI collaboration in ways that most tech companies are still figuring out. So when Caterpillar moves into AI deployment consulting and services, they're bringing battle-tested knowledge.
 
-Speaking of big tech companies and their relationships with AI, there's been quite a bit of discussion about Mark Zuckerberg's positioning on AI and social responsibility. These kinds of discussions are important because the decisions these companies make ripple out across the entire ecosystem.
+We're also seeing Meta quietly but seriously investing in robotics for their data centers. They're testing robots on tasks that technicians currently do, which is a really pragmatic approach to automation. It's not sexy, it's not getting headlines like humanoid robots might, but it's real work that creates real value. That's where the smart money often goes in AI.
 
-Now, I want to turn our attention to some really important policy and governance issues, because these are shaping how AI develops and gets deployed in the real world.
+Then there's Artie, a YC startup, actively hiring for technical roles, which reminds us that the startup ecosystem continues to find gaps and opportunities in the AI space. These smaller, faster-moving companies are where a lot of experimentation happens.
 
-There's been a significant development in Texas around AI surveillance technology. Governor Greg Abbott has actually frozen state spending on Flock cameras, which are AI-powered surveillance systems. Now, here's the important context: Texas spent over thirty million dollars on these Flock cameras, and much of that funding came from adding a one-dollar fee to insurance policies. This freeze didn't happen in a vacuum. There's been growing backlash about these systems, and according to reporting from the Texas Tribune, people are increasingly questioning whether this is the right use of public money and public surveillance technology. This is one of those stories where you're seeing real governance questions about AI deployment happening at the state level, and those decisions matter enormously.
+Now, we have to talk about the elephant in the room, and that's governance and policy. This is where things get complicated, and honestly, a little contentious. There's a fascinating piece about agency and agents that really digs into what we learned from the Hugging Face incident and what it means for how AI systems should behave. The core question is pretty fundamental: when we build systems that can act somewhat autonomously, what responsibilities do we have, and what guardrails matter?
 
-On the international stage, Europe's dealing with some thorny issues around encryption and security. The European Commission has revived its push for encryption backdoors as part of something called the ProtectEU Strategy. Now, this is contentious stuff. On one hand, there are legitimate law enforcement concerns about encryption. On the other hand, security researchers and privacy advocates worry that backdoors, once created, can be exploited by the wrong actors. This is the kind of policy debate that's going to define what's possible and what's not in the AI era.
+Speaking of policy, we're seeing real friction emerge around surveillance. Texas Governor Greg Abbott just froze state spending on Flock's AI surveillance cameras after a Texas Tribune investigation revealed that the state had spent over thirty million dollars on them. The money came from adding a dollar fee to insurance policies, and there's been growing backlash about surveillance overreach. This is a really important moment because it shows that AI tools aren't just evaluated on their technical merit anymore. They're being evaluated on their societal impact, and when the public pushes back, even red states are reconsidering.
 
-There's also been some important security research work happening. METR and Redwood have published a postmortem analysis of the HuggingFace hack, which is a major platform in the AI world. Understanding how these breaches happen and what went wrong is crucial for making sure it doesn't happen again. Security is foundational to everything else we do with AI.
+In Europe, things are equally complicated. The European Commission has revived its push for encryption backdoors as part of their broader ProtectEU strategy. Now, this is one of those issues where you'll see technologists, privacy advocates, law enforcement, and policymakers all talking past each other. The tension between security and surveillance is real, and it's not getting easier to resolve.
 
-Now, before we wrap up, I want to mention a couple of other things that are on the radar today. There's been some discussion about startup anti-patterns—basically, the common mistakes that new AI companies make. And there's ongoing work in the open source community that continues to power so much of the AI ecosystem. The release of Haiku R1 beta six is worth noting for folks who are working with those tools.
+There's also the broader question of how AI fits into our existing regulatory frameworks. These policy conversations are happening right now, and they're going to shape what AI can and can't do in different parts of the world.
 
-We're also seeing some important security vulnerabilities being disclosed, like the Omarchy privilege escalation issue, which is a reminder that even as we're building all these amazing new AI systems, we still have to stay vigilant about the fundamentals of security and system safety.
+Before we wrap up, I want to touch on a few other developments that deserve your attention. There's some fascinating technical security research happening, including discoveries about vulnerabilities in systems like QubesOS and something called Omarchy that shows how certain systems can be exploited for privilege escalation. These are the kinds of findings that matter for anyone building or deploying AI systems, because security is foundational.
 
-Look, what strikes me about today's news cycle is that we're seeing AI move from being this exciting new frontier into becoming part of how actual organizations and governments operate. OpenAI's confusing dual-product approach to ChatGPT Work shows us that even the biggest companies are still figuring out how to structure these tools. Caterpillar bringing industrial expertise to AI deployment shows us that this is becoming enterprise stuff. The Texas decision on surveillance cameras shows us that communities are starting to ask hard questions about how AI gets used. And the security research on HuggingFace reminds us that none of this works unless we get the fundamentals right.
+We've also got some great open-source developments happening, including new work on GPU drivers and various system-level improvements. Open source continues to be where a lot of the unglamorous but essential work happens. Someone needs to write the drivers, someone needs to maintain the infrastructure, and thank goodness for the people doing it.
 
-So as you go through your day, think about what this all means. AI isn't just in the headlines anymore. It's in our data centers, it's in our policy conversations, it's in our educational tools, and it's in our communities. That's kind of remarkable when you step back and think about it.
+And you know, as we think about all of this, from the cutting edge research in new model architectures to the real-world deployment challenges at companies like Caterpillar and Meta, from policy debates about surveillance to open-source maintenance, what strikes me is how mature the field is becoming. We're past the "what if AI is possible" phase. We're in the "how do we do AI responsibly at scale" phase. That's more complex, messier, less exciting in some ways, but ultimately more important.
 
-Thanks so much for spending these last few minutes with me. I'm Bri, and I hope this briefing has given you a good sense of where things are heading in the AI world. Keep your eyes open out there, stay curious, and I'll catch you next time.</div>
+So as you head into your day, remember that AI isn't just happening in research labs or in the news. It's being deployed in real systems, governed by real policies, and shaped by real conversations about what we want it to do and how it should behave.
+
+Thank you so much for spending these few minutes with me this morning. I'm Bri, and I'll be back tomorrow with more on what's happening in artificial intelligence. Enjoy your day, and stay curious.</div>
+    </div>
+
   </div>
 
   <script>
     const player = document.getElementById("player");
-    function setSpeed(rate) {
+    function setSpeed(rate, btn) {
       player.playbackRate = rate;
       document.querySelectorAll(".speed-btn").forEach(b => b.classList.remove("active"));
-      event.target.classList.add("active");
+      btn.classList.add("active");
     }
   </script>
-
 </body>
 </html>
