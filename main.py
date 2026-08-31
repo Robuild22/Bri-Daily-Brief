@@ -3,6 +3,7 @@ import sys
 from fetch_feeds import fetch_all_feeds
 from generate_script import generate_briefing_script
 from tts import text_to_speech
+from build_page import build_page
 
 
 def main():
@@ -31,6 +32,11 @@ def main():
     audio_path = text_to_speech(script)
     size_kb = os.path.getsize(audio_path) // 1024
     print(f"Bri: Audio saved to {audio_path} ({size_kb} KB)")
+
+    print("\nBri: Building web page...")
+    build_page(script, audio_path)
+
+    print("\nBri: All done. Ready to publish.")
 
 
 if __name__ == "__main__":
