@@ -1,6 +1,8 @@
+import os
 import sys
 from fetch_feeds import fetch_all_feeds
 from generate_script import generate_briefing_script
+from tts import text_to_speech
 
 
 def main():
@@ -21,10 +23,14 @@ def main():
     print(script)
     print("\n" + "=" * 60)
 
-    # Save script to file so later steps can use it
     with open("script.txt", "w", encoding="utf-8") as f:
         f.write(script)
     print("\nBri: Script saved to script.txt")
+
+    print("\nBri: Converting script to audio...")
+    audio_path = text_to_speech(script)
+    size_kb = os.path.getsize(audio_path) // 1024
+    print(f"Bri: Audio saved to {audio_path} ({size_kb} KB)")
 
 
 if __name__ == "__main__":
