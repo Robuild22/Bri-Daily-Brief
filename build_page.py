@@ -69,206 +69,63 @@ def build_page(script, audio_path="audio/brief.mp3"):
       opacity: 0.35;
     }}
 
-    /* --------------------------------------------------------
-       AVATAR VIDEO PLACEHOLDER
-       When your talking-avatar video is ready, delete the
-       .avatar-placeholder div below and replace it with:
+    /* ============================================================
+       EARTH VISUAL — rotating globe with mic overlay
+       ============================================================
+       TO REPLACE WITH YOUR AVATAR VIDEO when ready:
+       1. Delete the entire <div class="earth-scene">...</div> block
+       2. Paste your video in its place, for example:
 
-         <video autoplay loop muted playsinline
-                style="width:100%; border-radius:16px;">
-           <source src="your-avatar.mp4" type="video/mp4" />
-         </video>
+          <video autoplay loop muted playsinline
+                 style="width:100%;border-radius:16px;margin-bottom:2rem;">
+            <source src="your-avatar.mp4" type="video/mp4" />
+          </video>
 
-       For a hosted embed, use an <iframe> instead.
-       Remove this comment block too.
-    -------------------------------------------------------- */
-    .avatar-placeholder {{
+       3. Remove the CSS below between the ==== markers
+       ============================================================ */
+
+    .earth-scene {{
       position: relative;
       height: 300px;
       border-radius: 16px;
-      background: linear-gradient(135deg, #0d0d2b, #0a1628);
-      border: 1px solid rgba(0, 212, 255, 0.2);
+      background: radial-gradient(ellipse at 50% 60%, #0a0a25 0%, #020208 100%);
+      border: 1px solid rgba(0, 212, 255, 0.15);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       margin-bottom: 2rem;
     }}
 
-    .avatar-placeholder::before {{
+    .earth-scene::before {{
       content: '';
       position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(168,85,247,0.15), rgba(0,212,255,0.05), transparent 70%);
-      animation: pulse 3s ease-in-out infinite;
+      inset: 0;
+      background-image:
+        radial-gradient(1.5px 1.5px at 8% 12%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 18% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 30% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 58% 10%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 68% 45%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 80%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 25%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 93% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 88%, rgba(255,255,255,0.4) 0%, transparent 100%);
     }}
 
-    @keyframes pulse {{
-      0%, 100% {{ transform: scale(1); opacity: 0.6; }}
-      50% {{ transform: scale(1.15); opacity: 1; }}
-    }}
-
-    .avatar-ring {{
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 2px solid rgba(0, 212, 255, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .earth-container {{
       position: relative;
-      margin-bottom: 1.2rem;
+      width: 170px;
+      height: 170px;
     }}
 
-    .avatar-ring::after {{
-      content: '';
+    .atmosphere {{
       position: absolute;
-      inset: -10px;
+      inset: -14px;
       border-radius: 50%;
-      border: 1px solid rgba(168, 85, 247, 0.2);
-    }}
-
-    .avatar-icon {{ font-size: 3rem; }}
-
-    .avatar-label {{
-      font-family: 'Orbitron', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      color: #6b7db3;
-      text-transform: uppercase;
-      position: relative;
-    }}
-
-    .player-section {{
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(0, 212, 255, 0.15);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-    }}
-
-    audio {{
-      width: 100%;
-      margin-bottom: 1.2rem;
-      border-radius: 8px;
-      accent-color: #00d4ff;
-    }}
-
-    .speed-label {{
-      font-family: 'Orbitron', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: #6b7db3;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }}
-
-    .speed-controls {{ display: flex; gap: 0.4rem; flex-wrap: wrap; }}
-
-    .speed-btn {{
-      padding: 0.35rem 0.65rem;
-      border: 1px solid rgba(0, 212, 255, 0.2);
-      border-radius: 6px;
-      background: transparent;
-      color: #6b7db3;
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-family: 'Inter', sans-serif;
-      transition: all 0.2s;
-    }}
-
-    .speed-btn:hover {{ border-color: rgba(0,212,255,0.5); color: #00d4ff; }}
-
-    .speed-btn.active {{
-      background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(168,85,247,0.15));
-      border-color: #00d4ff;
-      color: #00d4ff;
-    }}
-
-    .transcript-section {{
-      border-top: 1px solid rgba(0, 212, 255, 0.1);
-      padding-top: 2rem;
-    }}
-
-    .transcript-heading {{
-      font-family: 'Orbitron', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      color: #00d4ff;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      opacity: 0.7;
-    }}
-
-    .transcript {{
-      white-space: pre-wrap;
-      font-size: 1rem;
-      line-height: 1.85;
-      color: #c0ccee;
-      font-weight: 300;
-    }}
-  </style>
-</head>
-<body>
-  <div class="container">
-
-    <div class="header">
-      <div class="logo">BRI</div>
-      <div class="tagline">Daily AI Intelligence Brief</div>
-      <div class="date">{today}</div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- AVATAR PLACEHOLDER — replace this div with your video element when ready -->
-    <div class="avatar-placeholder">
-      <div class="avatar-ring">
-        <div class="avatar-icon">🎙️</div>
-      </div>
-      <div class="avatar-label">Avatar coming soon</div>
-    </div>
-
-    <div class="player-section">
-      <audio id="player" controls preload="metadata">
-        <source src="{audio_path}" type="audio/mpeg" />
-        Your browser does not support the audio element.
-      </audio>
-      <div class="speed-label">Playback Speed</div>
-      <div class="speed-controls">
-        <button class="speed-btn" onclick="setSpeed(0.75, this)">0.75×</button>
-        <button class="speed-btn active" onclick="setSpeed(1, this)">1×</button>
-        <button class="speed-btn" onclick="setSpeed(1.25, this)">1.25×</button>
-        <button class="speed-btn" onclick="setSpeed(1.5, this)">1.5×</button>
-        <button class="speed-btn" onclick="setSpeed(1.75, this)">1.75×</button>
-        <button class="speed-btn" onclick="setSpeed(2, this)">2×</button>
-        <button class="speed-btn" onclick="setSpeed(2.5, this)">2.5×</button>
-        <button class="speed-btn" onclick="setSpeed(3, this)">3×</button>
-        <button class="speed-btn" onclick="setSpeed(4, this)">4×</button>
-        <button class="speed-btn" onclick="setSpeed(5, this)">5×</button>
-      </div>
-    </div>
-
-    <div class="transcript-section">
-      <div class="transcript-heading">Full Transcript</div>
-      <div class="transcript">{script}</div>
-    </div>
-
-  </div>
-
-  <script>
-    const player = document.getElementById("player");
-    function setSpeed(rate, btn) {{
-      player.playbackRate = rate;
-      document.querySelectorAll(".speed-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-    }}
-  </script>
-</body>
-</html>"""
-
-    with open("index.html", "w", encoding="utf-8") as f:
-        f.write(html)
-    print("Bri: Web page saved to index.html")
+      background: radial-gradient(circle at 38% 32%,
+        transparent 48%,
+        rgba(30, 144, 255, 0.18) 62%,
+        rgba(0, 212, 255, 0.08) 75%,
+        
