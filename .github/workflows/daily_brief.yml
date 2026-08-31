@@ -1,7 +1,16 @@
 name: Bri Daily Brief
 
 on:
+  # Runs every day at 5:45 AM Eastern (10:45 UTC)
+  # To change the time, edit the cron line below
+  # Format: minute hour day month weekday
+  schedule:
+    - cron: "45 10 * * *"
+  # Keep this so you can also trigger it manually anytime
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   generate-brief:
@@ -23,3 +32,11 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python main.py
+
+      - name: Publish to GitHub Pages
+        run: |
+          git config user.name "Bri Bot"
+          git config user.email "bri-bot@users.noreply.github.com"
+          git add index.html audio/
+          git commit -m "Daily brief: $(date -u +%Y-%m-%d)" || echo "Nothing to commit"
+          git push
