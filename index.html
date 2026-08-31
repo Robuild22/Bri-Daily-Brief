@@ -2,10 +2,149 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bri — Daily AI Brief</title>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      background: #fafaf8;
+      color: #1a1a1a;
+      line-height: 1.7;
+    }
+    h1 { font-size: 2rem; margin-bottom: 0.25rem; }
+    .date { color: #666; margin-bottom: 2rem; font-style: italic; }
+    .player-section {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    audio { width: 100%; margin-bottom: 1rem; }
+    .speed-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    .speed-controls span { font-size: 0.9rem; color: #555; margin-right: 0.25rem; }
+    .speed-btn {
+      padding: 0.3rem 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f5f5f5;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .speed-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+
+    /* --------------------------------------------------------
+       AVATAR VIDEO PLACEHOLDER
+       When you have a talking-avatar video ready, replace the
+       <div> below with a <video> or <iframe> tag pointing to
+       your video file or embed URL. Remove this entire comment
+       and the placeholder div, and drop your video element in.
+    -------------------------------------------------------- */
+    .avatar-placeholder {
+      background: #e8e8e8;
+      border: 2px dashed #bbb;
+      border-radius: 12px;
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    .avatar-placeholder .icon { font-size: 3rem; margin-bottom: 0.5rem; }
+
+    .transcript-section h2 { font-size: 1.3rem; border-bottom: 1px solid #ddd; padding-bottom: 0.5rem; }
+    .transcript { white-space: pre-wrap; font-size: 1rem; }
+  </style>
 </head>
 <body>
-  <h1>Bri is almost ready.</h1>
-  <p>Your daily AI briefing will appear here each morning.</p>
+
+  <h1>Bri — Daily AI Brief</h1>
+  <p class="date">August 31, 2026</p>
+
+  <!-- AVATAR VIDEO PLACEHOLDER — replace this block with your video when ready -->
+  <div class="avatar-placeholder">
+    <div class="icon">🎙️</div>
+    <div>Talking avatar video will appear here</div>
+    <div style="font-size:0.8rem; margin-top:0.4rem;">Replace this div in build_page.py</div>
+  </div>
+
+  <div class="player-section">
+    <audio id="player" controls preload="metadata">
+      <source src="audio/brief.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <div class="speed-controls">
+      <span>Speed:</span>
+      <button class="speed-btn" onclick="setSpeed(0.75)">0.75x</button>
+      <button class="speed-btn active" onclick="setSpeed(1)">1x</button>
+      <button class="speed-btn" onclick="setSpeed(1.25)">1.25x</button>
+      <button class="speed-btn" onclick="setSpeed(1.5)">1.5x</button>
+      <button class="speed-btn" onclick="setSpeed(1.75)">1.75x</button>
+      <button class="speed-btn" onclick="setSpeed(2)">2x</button>
+      <button class="speed-btn" onclick="setSpeed(3)">3x</button>
+      <button class="speed-btn" onclick="setSpeed(5)">5x</button>
+    </div>
+  </div>
+
+  <div class="transcript-section">
+    <h2>Full Transcript</h2>
+    <div class="transcript"># AI MORNING BRIEFING – BRI'S SCRIPT
+
+Good morning, everyone. I'm Bri, and welcome to your AI news briefing. It's great to have you here with your coffee. We've got a lot of ground to cover today, so let's dive right in.
+
+Our top story this morning is something that's been causing quite a bit of confusion in the AI community, and honestly, I think a lot of people are going to want clarity on this. OpenAI has been making some significant changes to ChatGPT Work since they announced it back in July, and it turns out the company has actually created two separate products under the same name. I know, confusing right? Let me break this down for you.
+
+The first version, which we can think of as Work Cloud, is what you access through ChatGPT dot com or through the mobile apps. This is the cloud-based experience you've probably heard about. But here's where it gets interesting. If you install the ChatGPT desktop application—which used to be called Codex—you get access to a different beast entirely. This version can directly access files on your computer and run programs locally. So you're basically getting two very different experiences depending on which path you take. According to analysis from Simon Willison's weblog, this is an extraordinarily powerful product, but the dual nature of it has definitely created some real confusion in the developer and business community. We're still learning what all the capabilities and limitations are, but if you're thinking about using ChatGPT Work for your organization, you'll definitely want to understand which version you're actually getting.
+
+All right, let's shift gears a bit and talk about what's happening in terms of new AI models and research breakthroughs, because there's been some fascinating technical work happening.
+
+First up, there's Continuous Diffusion Language Models, or CDLMs for short. This is some emerging research that's generating a lot of discussion in the technical community. The implications here could be pretty significant for how we think about generating and processing language going forward. It's one of those pieces of research that doesn't make headlines in the mainstream media, but in the AI world, people are paying close attention.
+
+We're also seeing some really interesting applications coming out. There's a new tool called Academa that's generating long-form STEM lecture videos using large language models. Think about that for a second. We're moving into territory where AI can now create educational content at scale. That's going to have huge implications for how people learn, especially in technical fields. It's still very early, but it's the kind of innovation that shows where we're heading.
+
+On a related note, there's been work on automating immersive reading experiences as well. These tools are making educational content more accessible and more personalized. We're seeing AI move from being a tool that answers questions to being a tool that can actually shape how we consume and learn information.
+
+Now let's talk about the business and funding side of things, because that's where the real action is in terms of where the industry is heading.
+
+Caterpillar is bringing its decades of experience with autonomous machines to the broader AI deployment world. If you know anything about Caterpillar, you know they've spent a really long time putting autonomous equipment to work in remote mining operations. Now they're taking everything they've learned from that world and applying it to help other companies deploy AI safely and effectively. That's the kind of enterprise-level thinking that's going to be crucial as AI moves from startups into the operations of massive industrial organizations.
+
+We're also seeing Meta get into the robotics game in their data centers. They're testing robots for tasks that technicians currently perform. This is a big deal because if it works, we're looking at a whole new category of application for both AI and robotics in what many people consider the backbone of the internet.
+
+Speaking of big tech companies and their relationships with AI, there's been quite a bit of discussion about Mark Zuckerberg's positioning on AI and social responsibility. These kinds of discussions are important because the decisions these companies make ripple out across the entire ecosystem.
+
+Now, I want to turn our attention to some really important policy and governance issues, because these are shaping how AI develops and gets deployed in the real world.
+
+There's been a significant development in Texas around AI surveillance technology. Governor Greg Abbott has actually frozen state spending on Flock cameras, which are AI-powered surveillance systems. Now, here's the important context: Texas spent over thirty million dollars on these Flock cameras, and much of that funding came from adding a one-dollar fee to insurance policies. This freeze didn't happen in a vacuum. There's been growing backlash about these systems, and according to reporting from the Texas Tribune, people are increasingly questioning whether this is the right use of public money and public surveillance technology. This is one of those stories where you're seeing real governance questions about AI deployment happening at the state level, and those decisions matter enormously.
+
+On the international stage, Europe's dealing with some thorny issues around encryption and security. The European Commission has revived its push for encryption backdoors as part of something called the ProtectEU Strategy. Now, this is contentious stuff. On one hand, there are legitimate law enforcement concerns about encryption. On the other hand, security researchers and privacy advocates worry that backdoors, once created, can be exploited by the wrong actors. This is the kind of policy debate that's going to define what's possible and what's not in the AI era.
+
+There's also been some important security research work happening. METR and Redwood have published a postmortem analysis of the HuggingFace hack, which is a major platform in the AI world. Understanding how these breaches happen and what went wrong is crucial for making sure it doesn't happen again. Security is foundational to everything else we do with AI.
+
+Now, before we wrap up, I want to mention a couple of other things that are on the radar today. There's been some discussion about startup anti-patterns—basically, the common mistakes that new AI companies make. And there's ongoing work in the open source community that continues to power so much of the AI ecosystem. The release of Haiku R1 beta six is worth noting for folks who are working with those tools.
+
+We're also seeing some important security vulnerabilities being disclosed, like the Omarchy privilege escalation issue, which is a reminder that even as we're building all these amazing new AI systems, we still have to stay vigilant about the fundamentals of security and system safety.
+
+Look, what strikes me about today's news cycle is that we're seeing AI move from being this exciting new frontier into becoming part of how actual organizations and governments operate. OpenAI's confusing dual-product approach to ChatGPT Work shows us that even the biggest companies are still figuring out how to structure these tools. Caterpillar bringing industrial expertise to AI deployment shows us that this is becoming enterprise stuff. The Texas decision on surveillance cameras shows us that communities are starting to ask hard questions about how AI gets used. And the security research on HuggingFace reminds us that none of this works unless we get the fundamentals right.
+
+So as you go through your day, think about what this all means. AI isn't just in the headlines anymore. It's in our data centers, it's in our policy conversations, it's in our educational tools, and it's in our communities. That's kind of remarkable when you step back and think about it.
+
+Thanks so much for spending these last few minutes with me. I'm Bri, and I hope this briefing has given you a good sense of where things are heading in the AI world. Keep your eyes open out there, stay curious, and I'll catch you next time.</div>
+  </div>
+
+  <script>
+    const player = document.getElementById("player");
+    function setSpeed(rate) {
+      player.playbackRate = rate;
+      document.querySelectorAll(".speed-btn").forEach(b => b.classList.remove("active"));
+      event.target.classList.add("active");
+    }
+  </script>
+
 </body>
 </html>
